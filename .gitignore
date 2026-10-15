@@ -1,0 +1,15 @@
+# Local configuration and unrelated design work
+.local/
+secrets.yaml
+**/secrets.yaml
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv*/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.esphome/
+NewScript/
+heltec*

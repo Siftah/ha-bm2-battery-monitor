@@ -1,0 +1,10 @@
+recover:
+  name: Recover Battery History
+  description: Download BM2 history through a reachable Bluetooth adapter and import complete hourly voltage statistics.
+  fields:
+    battery_id:
+      name: Battery ID
+      required: true
+      example: porsche_starter
+      selector:
+        text:

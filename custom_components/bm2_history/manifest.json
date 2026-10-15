@@ -1,0 +1,18 @@
+{
+  "domain": "bm2_history",
+  "name": "BM2 Battery Monitor",
+  "codeowners": [
+    "@Siftah"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "bluetooth",
+    "recorder"
+  ],
+  "documentation": "https://github.com/Siftah/ha-bm2-battery-monitor",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/Siftah/ha-bm2-battery-monitor/issues",
+  "requirements": [],
+  "version": "0.2.0b1"
+}

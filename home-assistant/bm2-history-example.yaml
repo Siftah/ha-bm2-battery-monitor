@@ -1,0 +1,27 @@
+# Merge this block into Home Assistant's configuration.yaml.
+# Replace/add voltage_sources with the actual voltage entity IDs of ALL receivers.
+bm2_history:
+  offline_after: 180
+  sync_interval: 3600
+  batteries:
+    rangerover_starter:
+      name: Range Rover Starter Battery
+      mac_address: "AA:BB:CC:DD:EE:01"
+      voltage_sources:
+        - sensor.rr_monitor_rangerover_starter_battery_voltage
+    porsche_starter:
+      name: Porsche Starter Battery
+      mac_address: "AA:BB:CC:DD:EE:02"
+      voltage_sources:
+        - sensor.rr_monitor_porsche_starter_battery_voltage
+
+# Dashboard card (put in a dashboard, not configuration.yaml):
+# type: statistics-graph
+# title: Starter Battery Voltage
+# chart_type: line
+# period: hour
+# days_to_show: 7
+# stat_types: [min, mean, max]
+# entities:
+#   - bm2_history:rangerover_starter_voltage
+#   - bm2_history:porsche_starter_voltage

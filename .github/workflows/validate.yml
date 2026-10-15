@@ -1,0 +1,50 @@
+name: Validate
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+      - run: pip install -r requirements-test.txt
+      - run: pytest -q
+      - run: ruff check custom_components tests
+      - run: ruff format --check custom_components tests
+  hassfest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: home-assistant/actions/hassfest@master
+  hacs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hacs/action@main
+        with:
+          category: integration
+  firmware:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install esphome==2026.9.1
+      - name: Generate CI-only secrets
+        run: |
+          python - <<'PYTHON'
+          import base64, pathlib, secrets
+          text = pathlib.Path('esphome/secrets.yaml.example').read_text()
+          text = text.replace('REPLACE_WITH_A_GENERATED_BASE64_32_BYTE_KEY', base64.b64encode(secrets.token_bytes(32)).decode())
+          pathlib.Path('secrets.yaml').write_text(text)
+          PYTHON
+      - run: esphome config bt-monitor.yaml
+      - run: esphome compile bt-monitor.yaml

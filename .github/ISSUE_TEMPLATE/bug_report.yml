@@ -1,0 +1,21 @@
+name: Bug report
+description: Report setup, live monitoring or recovery problems
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Integration, Home Assistant and ESPHome versions
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Steps, expected result and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted logs and device details
+      description: Remove MAC addresses, passwords and API keys. Never attach secrets.yaml.
+      render: text

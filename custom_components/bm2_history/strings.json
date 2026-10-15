@@ -1,0 +1,49 @@
+{
+  "title": "BM2 Battery Monitor",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a BM2 battery",
+        "description": "Select the ESPHome voltage sensors for this physical battery. Include every receiver. The battery may be away during setup; its Bluetooth connection is tested on the first recovery.",
+        "data": {
+          "name": "Battery name",
+          "battery_id": "Stable battery ID",
+          "mac_address": "BM2 Bluetooth address",
+          "voltage_sources": "ESPHome voltage sensors",
+          "offline_after": "Offline threshold (seconds)",
+          "sync_interval": "History sync interval (seconds)"
+        },
+        "data_description": {
+          "battery_id": "Lowercase letters, numbers and underscores. Used in the permanent history statistics ID.",
+          "voltage_sources": "Select receiver sensors, never this integration's own voltage sensor."
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Enter an address such as AA:BB:CC:DD:EE:FF.",
+      "invalid_battery_id": "Use lowercase letters, numbers and underscores, without leading/trailing underscores.",
+      "duplicate_battery_id": "This battery ID is already in use.",
+      "no_sources": "Select at least one ESPHome voltage sensor.",
+      "recursive_source": "Select ESPHome receiver sensors, not BM2 canonical sensors."
+    },
+    "abort": {
+      "already_configured": "This BM2 Bluetooth address is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Battery receivers and recovery",
+        "data": {
+          "voltage_sources": "ESPHome voltage sensors",
+          "offline_after": "Offline threshold (seconds)",
+          "sync_interval": "History sync interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "no_sources": "Select at least one ESPHome voltage sensor.",
+      "recursive_source": "Select ESPHome receiver sensors, not BM2 canonical sensors."
+    }
+  }
+}
