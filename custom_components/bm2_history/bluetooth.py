@@ -3,7 +3,7 @@
 import asyncio
 import logging
 
-from bleak_retry_connector import BleakClientWithServiceCache, establish_connection
+import bleak_retry_connector
 from homeassistant.components import bluetooth
 from homeassistant.core import callback
 from homeassistant.util import dt as dt_util
@@ -54,8 +54,11 @@ async def download_history(hass, address):
     client = None
     try:
         async with asyncio.timeout(90):
-            client = await establish_connection(
-                BleakClientWithServiceCache,
+            # HA replaces this class when Bluetooth initializes. Resolve it here,
+            # since importing a class during YAML/schema loading can retain the
+            # raw platform client and bypass ESPHome proxy routing.
+            client = await bleak_retry_connector.establish_connection(
+                bleak_retry_connector.BleakClientWithServiceCache,
                 device,
                 address,
                 disconnected_callback=disconnected,

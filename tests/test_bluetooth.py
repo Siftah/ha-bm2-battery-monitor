@@ -1,7 +1,7 @@
 """Exercise the GATT session with encrypted synthetic notifications."""
 
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, patch, sentinel
 
 import pytest
 
@@ -39,11 +39,17 @@ async def test_gatt_download_and_disconnect(hass, empty):
             return_value=object(),
         ),
         patch(
-            "custom_components.bm2_history.bluetooth.establish_connection",
+            "custom_components.bm2_history.bluetooth.bleak_retry_connector.establish_connection",
             new=AsyncMock(return_value=client),
+        ) as establish,
+        patch(
+            "custom_components.bm2_history.bluetooth.bleak_retry_connector.BleakClientWithServiceCache",
+            sentinel.ha_proxy_client,
         ),
     ):
         readings = await download_history(hass, "AA:BB:CC:DD:EE:FF")
+    # Simulate HA replacing the class after our module was imported.
+    assert establish.call_args.args[0] is sentinel.ha_proxy_client
     assert len(readings) == (0 if empty else 1)
     if not empty:
         assert readings[0].voltage == 12.36

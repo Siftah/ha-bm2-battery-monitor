@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0b2
+
+- Resolve the Bluetooth client class at connection time so HA's proxy routing
+  wrapper is used even when YAML validation imports the module before Bluetooth
+  setup. Fixes history recovery failing with a `path` KeyError on remote proxies.
+- Regression coverage simulates HA replacing the client class after module import.
+
 ## 0.2.0b1
 
 First shareable HACS beta; hardware acceptance remains pending.
